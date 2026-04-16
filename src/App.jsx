@@ -17,7 +17,7 @@ function ProtectedRoute({ children }) {
 export default function App() {
   return (
     <Routes>
-      <Route path="/:id/management.pcred.org/:slug" element={<ManagementItemPublicView />} />
+      <Route path="/:id/:slug" element={<ManagementItemPublicView />} />
       <Route path="/employee/:id" element={<EmployeePublicView />} />
       <Route path="/login" element={<Login />} />
       <Route

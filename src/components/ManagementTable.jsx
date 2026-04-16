@@ -10,7 +10,7 @@ function publicMgmtUrl(itemId, fullName) {
     .replace(/\s+/g, '-')        // spaces → hyphens
     .replace(/[^a-z0-9-]/g, ''); // remove special chars
 
-  return `${window.location.origin}/${itemId}/management.pcred.org/${slug}`;
+  return `${window.location.origin}/${itemId}/${slug}`;
 }
 
 export default function ManagementTable({ items, onRefresh, onEdit }) {

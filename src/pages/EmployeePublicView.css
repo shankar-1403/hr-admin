@@ -1,0 +1,146 @@
+.employee-public-wrap {
+  min-height: 100vh;
+  background: #b8d4e8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+
+.employee-public-loading {
+  color: #1e293b;
+  font-size: 1.125rem;
+}
+
+.employee-public-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
+  width: 100%;
+  max-width: 560px;
+  overflow: hidden;
+}
+
+.employee-public-error {
+  padding: 2rem;
+  text-align: center;
+  color: #64748b;
+}
+
+.employee-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 0 1.5rem;
+  padding-top: 0;
+  position: relative;
+}
+
+.employee-card-avatar-wrap {
+  margin-top: 10px;
+  flex-shrink: 0;
+}
+
+.employee-card-avatar,
+.employee-card-avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.employee-card-avatar-placeholder {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.employee-card-brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding-top: 1rem;
+}
+
+.employee-card-logo {
+  height: 100px;
+  width: auto;
+}
+
+.employee-card-tagline {
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin-top: 0.25rem;
+}
+
+.employee-card-details {
+  padding: 1.25rem 1.5rem 1.5rem;
+}
+
+.employee-card-dl {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.employee-card-row {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1rem;
+  align-items: start;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.employee-card-row:last-child {
+  border-bottom: none;
+}
+
+.employee-card-row dt {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 700;
+  color: #334155;
+}
+
+.employee-card-row dd {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: #475569;
+  line-height: 1.45;
+}
+
+.employee-card-website-btn {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background: #2563eb;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.employee-card-website-btn:hover {
+  background: #1d4ed8;
+}
+
+.employee-card-no-website {
+  color: #94a3b8;
+}
+
+@media (max-width: 480px) {
+  .employee-card-row {
+    grid-template-columns: 1fr;
+    gap: 0.25rem;
+  }
+}

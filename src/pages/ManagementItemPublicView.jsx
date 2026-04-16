@@ -411,7 +411,7 @@ export default function ManagementItemPublicView() {
                   window.open(d.websiteUrl, '_blank');
                 }}
               >
-                <IconMapPin />
+                <IconGlobe />
               </TileButton>
             </div>
           </section>

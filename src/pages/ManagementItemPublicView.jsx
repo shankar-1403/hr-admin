@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { db } from '../firebase';
-import { ref, get, query, orderByChild, equalTo } from 'firebase/database';
+import { auth, db } from '../firebase';
+import { ref, get } from 'firebase/database';
 import { RTDB_MANAGEMENT_ITEMS } from '../constants/rtdbPaths';
 import {
   resolveManagementDisplay,
@@ -172,21 +172,11 @@ export default function ManagementItemPublicView() {
     let cancelled = false;
     (async () => {
       try {
-        const q = query(ref(db, RTDB_MANAGEMENT_ITEMS),orderByChild('shortId'),equalTo(id));
-        const snap = await get(q);
+        const snap = await get(ref(db, `${RTDB_MANAGEMENT_ITEMS}/${id}`));
         if (!snap.exists()) {
           if (!cancelled) setError('Record not found');
         } else if (!cancelled) {
-          const dataObj = snap.val();
-          const firstKey = Object.keys(dataObj)[0];
-          const recordData = dataObj[firstKey];
-
-          if (!cancelled) {
-            setRecord({
-              id: firstKey, // actual Firebase ID
-              ...recordData,
-            });
-          }
+          setRecord({ id, ...snap.val() });
         }
       } catch (err) {
         if (!cancelled) setError(err.message || 'Could not load record');

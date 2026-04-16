@@ -40,7 +40,6 @@ export default function ManagementTable({ items, onRefresh, onEdit }) {
         row.fullName,
         row.title,
         row.jobTitle,
-        row.shortId,
         row.subtitle,
         row.companyName,
         row.bio,
@@ -135,7 +134,7 @@ export default function ManagementTable({ items, onRefresh, onEdit }) {
                 <td>
                   <div>
                     <a
-                      href={publicMgmtUrl(row.shortId, row.fullName)}
+                      href={publicMgmtUrl(row.id, row.fullName)}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="qr-link"

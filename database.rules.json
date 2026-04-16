@@ -9,9 +9,12 @@
     },
     "managementItems": {
       ".read": "auth != null",
-      ".write": "auth != null",
+      ".write": "auth != null"
+    },
+    "managementPublicItems": {
       "$itemId": {
-        ".read": true
+        ".read": true,
+        ".write": "auth != null"
       }
     }
   }

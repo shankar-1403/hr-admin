@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { auth, db, isRealtimeDatabaseConfigured } from '../firebase';
-import { ref, onValue } from 'firebase/database';
-import { RTDB_MANAGEMENT_ITEMS } from '../constants/rtdbPaths';
+import { ref, onValue, set } from 'firebase/database';
+import { RTDB_MANAGEMENT_ITEMS  } from '../constants/rtdbPaths';
 import ManagementTable from '../components/ManagementTable';
 import AddManagementModal from '../components/AddManagementModal';
 import './Dashboard.css';

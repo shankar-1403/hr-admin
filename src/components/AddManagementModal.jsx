@@ -51,6 +51,15 @@ export default function AddManagementModal({ onClose, onAdded, item }) {
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
+    
+  const generateShortId = (length = 6) => {
+    const chars = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let result = '';
+    for (let i = 0; i < length; i++) {
+      result += chars[Math.floor(Math.random() * chars.length)];
+    }
+    return result;
+  };
 
   useEffect(() => {
     setForm(getInitialForm(item));
@@ -87,8 +96,11 @@ export default function AddManagementModal({ onClose, onAdded, item }) {
       }
 
       const now = Date.now();
+      const shortId = item?.shortId || generateShortId();
+
       const dataToSave = {
         fullName,
+        shortId,
         jobTitle: form.jobTitle.trim(),
         companyName: form.companyName.trim(),
         bio: form.bio.trim(),

@@ -214,7 +214,6 @@ export default function AddEmployeeModal({ onClose, onAdded, employee }) {
             <label>
               Website
               <input
-                type="url"
                 value={form.website}
                 onChange={(e) => update('website', e.target.value)}
                 placeholder="https://..."

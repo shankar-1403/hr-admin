@@ -23,7 +23,7 @@
 
 .employee-search:focus {
   outline: none;
-  border-color: #3b82f6;
+  border-color: #074C71;
   box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.2);
 }
 
@@ -60,16 +60,17 @@
 
 .employee-table th,
 .employee-table td {
-  padding: 0.85rem 1rem;
+  padding: 0.2rem 1rem;
+  font-size: 13px;
   text-align: left;
   border-bottom: 1px solid #f1f5f9;
 }
 
 .employee-table th {
   background: #f8fafc;
-  font-size: 0.75rem;
+  padding: 0.4rem 1rem;
+  font-size: 13px;
   font-weight: 600;
-  text-transform: uppercase;
   letter-spacing: 0.05em;
   color: #64748b;
 }
@@ -96,9 +97,8 @@
 .qr-link {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 0.35rem;
-  color: #2563eb;
+  color: #074C71;
   text-decoration: none;
   max-width: 88px;
 }
@@ -107,6 +107,7 @@
   display: inline;
   max-width: none;
   font-size: 0.75rem;
+  font-weight: 600;
 }
 
 .qr-link--textonly:hover {
@@ -118,9 +119,8 @@
 }
 
 .qr-link-label {
-  font-size: 0.7rem;
+  font-size: 13px;
   font-weight: 600;
-  text-align: center;
   line-height: 1.2;
 }
 
@@ -140,6 +140,7 @@
 
 .btn-delete {
   padding: 0.35rem 0.65rem;
+  font-weight: 600;
   background: #fef2f2;
   color: #b91c1c;
   border: none;
@@ -159,8 +160,9 @@
 
 .btn-edit {
   padding: 0.35rem 0.65rem;
-  background: #eff6ff;
-  color: #1d4ed8;
+  font-weight: 600;
+  background: #074c7122;
+  color: #074C71;
   border: none;
   border-radius: 6px;
   font-size: 0.8125rem;

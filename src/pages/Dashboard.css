@@ -39,7 +39,7 @@
 }
 
 .dashboard-logo {
-  height: 70px;
+  height: 40px;
   width: auto;
   display: block;
 }
@@ -66,9 +66,9 @@
 }
 
 .dashboard-nav-link--active {
-  color: #1d4ed8;
+  color: #074C71;
   background: #eff6ff;
-  border-color: #bfdbfe;
+  border-color: #074c7160;
 }
 
 .btn-logout {
@@ -87,7 +87,7 @@
 }
 
 .dashboard-main {
-  max-width: 1200px;
+  max-width: 1360px;
   margin: 0 auto;
   padding: 1.5rem;
 }
@@ -104,7 +104,7 @@
   margin: 0;
   font-size: 1.5rem;
   font-weight: 700;
-  color: #1e293b;
+  color: #074C71;
 }
 
 .dashboard-actions {
@@ -135,7 +135,7 @@
 
 .btn-primary {
   padding: 0.6rem 1.25rem;
-  background: #2563eb;
+  background: #074C71;
   color: #fff;
   border: none;
   border-radius: 8px;
@@ -145,7 +145,7 @@
 }
 
 .btn-primary:hover {
-  background: #1d4ed8;
+  background: #074C71;
 }
 
 .dashboard-loading {

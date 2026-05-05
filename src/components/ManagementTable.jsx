@@ -7,8 +7,8 @@ import './EmployeeTable.css';
 function publicMgmtUrl(itemId, fullName) {
   const slug = (fullName || '')
     .toLowerCase()
-    .replace(/\s+/g, '-')        // spaces → hyphens
-    .replace(/[^a-z0-9-]/g, ''); // remove special chars
+    .replace(/\s+/g, '-')        
+    .replace(/[^a-z0-9-]/g, ''); 
 
   return `${window.location.origin}/${itemId}/${slug}`;
 }
@@ -67,7 +67,7 @@ export default function ManagementTable({ items, onRefresh, onEdit }) {
   const currentPage = Math.min(page, totalPages);
   const start = (currentPage - 1) * pageSize;
   const visible = filtered.slice(start, start + pageSize);
-  const colCount = 5;
+  const colCount = 6;
 
   return (
     <div className="employee-table-wrap">
@@ -105,6 +105,7 @@ export default function ManagementTable({ items, onRefresh, onEdit }) {
       <table className="employee-table">
         <thead>
           <tr>
+            <th>Sr No.</th>
             <th>Name</th>
             <th>Job title</th>
             <th>Company</th>
@@ -120,14 +121,15 @@ export default function ManagementTable({ items, onRefresh, onEdit }) {
               </td>
             </tr>
           ) : (
-            visible.map((row) => (
+            visible.map((row,index) => (
               <tr key={row.id}>
-                <td>{row.fullName || row.title || '—'}</td>
-                <td>{row.jobTitle || row.subtitle || '—'}</td>
+                <td>{index+1}.</td>
+                <td>{row.fullName || row.title || '-'}</td>
+                <td>{row.jobTitle || row.subtitle || '-'}</td>
                 <td>
                   {(() => {
                     const c = (row.companyName || '').trim();
-                    if (!c) return '—';
+                    if (!c) return '-';
                     return c.length > 72 ? `${c.slice(0, 72)}…` : c;
                   })()}
                 </td>
@@ -146,21 +148,12 @@ export default function ManagementTable({ items, onRefresh, onEdit }) {
                 </td>
                 <td>
                   <div className="actions-cell">
-                    <button
-                      type="button"
-                      className="btn-edit"
-                      onClick={() => onEdit && onEdit(row)}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      type="button"
-                      className="btn-delete"
-                      onClick={() => handleDelete(row.id)}
-                      disabled={deletingId === row.id}
-                    >
-                      {deletingId === row.id ? '…' : 'Delete'}
-                    </button>
+                    <div>
+                      <button type="button" className="btn-edit" onClick={() => onEdit && onEdit(row)}>Edit</button>
+                    </div>
+                    <div>
+                      <button type="button" className="btn-delete" onClick={() => handleDelete(row.id)} disabled={deletingId === row.id}>{deletingId === row.id ? '…' : 'Delete'}</button>
+                    </div>
                   </div>
                 </td>
               </tr>

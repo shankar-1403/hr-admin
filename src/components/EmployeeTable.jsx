@@ -21,7 +21,7 @@ export default function EmployeeTable({
   const [pageSize, setPageSize] = useState(10);
 
   const showLinkColumn = publicLinkDisplay !== 'none';
-  const colCount = showLinkColumn ? 7 : 6;
+  const colCount = showLinkColumn ? 8 : 7;
 
   async function handleDelete(id) {
     if (!window.confirm('Delete this employee?')) return;
@@ -113,6 +113,7 @@ export default function EmployeeTable({
       <table className="employee-table">
         <thead>
           <tr>
+            <th>Sr No.</th>
             <th>Name</th>
             <th>Father&apos;s Name</th>
             <th>Spouse Name</th>
@@ -130,11 +131,12 @@ export default function EmployeeTable({
               </td>
             </tr>
           ) : (
-            visible.map((emp) => (
+            visible.map((emp, index) => (
               <tr key={emp.id}>
+                <td>{index+1}.</td>
                 <td>{emp.name}</td>
-                <td>{emp.fatherName || '—'}</td>
-                <td>{emp.spouseName || '—'}</td>
+                <td>{emp.fatherName || '-'}</td>
+                <td>{emp.spouseName || '-'}</td>
                 <td>{emp.bloodGroup}</td>
                 <td>{emp.emergencyContactNo}</td>
                 {showLinkColumn && (

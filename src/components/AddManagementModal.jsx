@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { ref, push, set } from 'firebase/database';
 import { RTDB_MANAGEMENT_ITEMS } from '../constants/rtdbPaths';
+import { normalizeManagementRoles } from '../utils/managementRecord';
 import './AddEmployeeModal.css';
 import './AddManagementModal.css';
 
+const emptyRole = () => ({ jobTitle: '', companyName: '' });
+
 const initialForm = {
   fullName: '',
-  jobTitle: '',
-  companyName: '',
   bio: '',
   profileImageUrl: '',
   mobilePhone: '',
@@ -24,12 +25,16 @@ const initialForm = {
   experience: '',
 };
 
+function getInitialRoles(item) {
+  if (!item) return [emptyRole()];
+  const roles = normalizeManagementRoles(item);
+  return roles.length ? roles.map((r) => ({ ...r })) : [emptyRole()];
+}
+
 function getInitialForm(item) {
   if (!item) return initialForm;
   return {
     fullName: item.fullName || item.title || '',
-    jobTitle: item.jobTitle || item.subtitle || '',
-    companyName: item.companyName || '',
     bio: item.bio || item.details || '',
     profileImageUrl: item.profileImageUrl || '',
     mobilePhone: item.mobilePhone || '',
@@ -48,18 +53,33 @@ function getInitialForm(item) {
 
 export default function AddManagementModal({ onClose, onAdded, item }) {
   const [form, setForm] = useState(() => getInitialForm(item));
+  const [roles, setRoles] = useState(() => getInitialRoles(item));
   const [profileImageFile, setProfileImageFile] = useState(null);
   const [error, setError] = useState('');
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     setForm(getInitialForm(item));
+    setRoles(getInitialRoles(item));
     setProfileImageFile(null);
   }, [item]);
 
   function update(field, value) {
     setForm((prev) => ({ ...prev, [field]: value }));
     setError('');
+  }
+
+  function updateRole(index, field, value) {
+    setRoles((prev) => prev.map((r, i) => (i === index ? { ...r, [field]: value } : r)));
+    setError('');
+  }
+
+  function addRole() {
+    setRoles((prev) => [...prev, emptyRole()]);
+  }
+
+  function removeRole(index) {
+    setRoles((prev) => (prev.length <= 1 ? prev : prev.filter((_, i) => i !== index)));
   }
 
   function readFileAsDataUrl(file) {
@@ -87,11 +107,19 @@ export default function AddManagementModal({ onClose, onAdded, item }) {
       }
 
       const now = Date.now();
+      const normalizedRoles = roles
+        .map((r) => ({
+          jobTitle: r.jobTitle.trim(),
+          companyName: r.companyName.trim(),
+        }))
+        .filter((r) => r.jobTitle || r.companyName);
+      const primary = normalizedRoles[0] || { jobTitle: '', companyName: '' };
 
       const dataToSave = {
         fullName,
-        jobTitle: form.jobTitle.trim(),
-        companyName: form.companyName.trim(),
+        roles: normalizedRoles,
+        jobTitle: primary.jobTitle,
+        companyName: primary.companyName,
         bio: form.bio.trim(),
         profileImageUrl,
         mobilePhone: form.mobilePhone.trim(),
@@ -146,23 +174,45 @@ export default function AddManagementModal({ onClose, onAdded, item }) {
                 placeholder="e.g. Vijay Kumar Sharma"
               />
             </label>
-            <div className="form-row-2">
-              <label>
-                Job title
-                <input
-                  value={form.jobTitle}
-                  onChange={(e) => update('jobTitle', e.target.value)}
-                  placeholder="e.g. Founder"
-                />
-              </label>
-              <label>
-                Company
-                <input
-                  value={form.companyName}
-                  onChange={(e) => update('companyName', e.target.value)}
-                  placeholder="e.g. Pcred venture Pvt Ltd"
-                />
-              </label>
+            <div className="mgmt-roles-block">
+              <div className="mgmt-roles-head">
+                <span className="mgmt-roles-label">Companies &amp; job titles</span>
+                <button type="button" className="mgmt-role-add-btn" onClick={addRole}>
+                  + Add company
+                </button>
+              </div>
+              {roles.map((role, index) => (
+                <div key={index} className="mgmt-role-row">
+                  <div className="form-row-2 mgmt-role-fields">
+                    <label>
+                      Job title
+                      <input
+                        value={role.jobTitle}
+                        onChange={(e) => updateRole(index, 'jobTitle', e.target.value)}
+                        placeholder="e.g. Founder"
+                      />
+                    </label>
+                    <label>
+                      Company
+                      <input
+                        value={role.companyName}
+                        onChange={(e) => updateRole(index, 'companyName', e.target.value)}
+                        placeholder="e.g. Pcred venture Pvt Ltd"
+                      />
+                    </label>
+                  </div>
+                  {roles.length > 1 && (
+                    <button
+                      type="button"
+                      className="mgmt-role-remove-btn"
+                      onClick={() => removeRole(index)}
+                      aria-label={`Remove company ${index + 1}`}
+                    >
+                      Remove
+                    </button>
+                  )}
+                </div>
+              ))}
             </div>
             <label>
               Profile photo

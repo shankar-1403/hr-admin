@@ -1,7 +1,8 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import { auth, db, isRealtimeDatabaseConfigured } from '../firebase';
 import { ref, onValue, set } from 'firebase/database';
-import { RTDB_MANAGEMENT_ITEMS  } from '../constants/rtdbPaths';
+import { RTDB_MANAGEMENT_ITEMS } from '../constants/rtdbPaths';
+import { normalizeManagementRoles } from '../utils/managementRecord';
 import ManagementTable from '../components/ManagementTable';
 import AddManagementModal from '../components/AddManagementModal';
 import './Dashboard.css';
@@ -99,10 +100,14 @@ export default function ManagementPage() {
       'Education',
       'Experience',
     ];
-    const rows = items.map((r) => [
+    const rows = items.map((r) => {
+      const roles = normalizeManagementRoles(r);
+      const jobTitles = roles.map((role) => role.jobTitle).filter(Boolean).join(' · ');
+      const companies = roles.map((role) => role.companyName).filter(Boolean).join(' · ');
+      return [
       r.fullName || r.title || '',
-      r.jobTitle || r.subtitle || '',
-      r.companyName || '',
+      jobTitles || r.jobTitle || r.subtitle || '',
+      companies || r.companyName || '',
       (r.bio || r.details || '').replace(/\r?\n/g, ' '),
       r.mobilePhone || '',
       r.email || '',
@@ -115,7 +120,8 @@ export default function ManagementPage() {
       r.websiteUrl || '',
       (r.education || '').replace(/\r?\n/g, ' '),
       (r.experience || '').replace(/\r?\n/g, ' '),
-    ]);
+    ];
+    });
     const csv = [headers, ...rows]
       .map((row) =>
         row

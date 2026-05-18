@@ -272,8 +272,21 @@ export default function ManagementItemPublicView() {
           </div>
           <div className="mgmt-hero-panel">
             <h1 className="mgmt-hero-name">{d.fullName}</h1>
-            {d.jobTitle && <p className="mgmt-hero-role">{d.jobTitle}</p>}
-            {d.companyName && <p className="mgmt-hero-org">{d.companyName}</p>}
+            {d.roles?.length ? (
+              <div className="mgmt-hero-roles">
+                {d.roles.map((role, i) => (
+                  <div key={i} className="mgmt-hero-role-item">
+                    {role.jobTitle && <p className="mgmt-hero-role">{role.jobTitle}</p>}
+                    {role.companyName && <p className="mgmt-hero-org">{role.companyName}</p>}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <>
+                {d.jobTitle && <p className="mgmt-hero-role">{d.jobTitle}</p>}
+                {d.companyName && <p className="mgmt-hero-org">{d.companyName}</p>}
+              </>
+            )}
           </div>
         </header>
 

@@ -75,6 +75,21 @@
   color: #64748b;
 }
 
+.mgmt-table-roles {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.mgmt-table-role-line {
+  line-height: 1.35;
+}
+
+.mgmt-table-role-line + .mgmt-table-role-line {
+  padding-top: 0.35rem;
+  border-top: 1px solid #e2e8f0;
+}
+
 .employee-table tbody tr:hover {
   background: #fafafa;
 }

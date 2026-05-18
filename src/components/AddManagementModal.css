@@ -30,3 +30,64 @@
     grid-template-columns: 1fr;
   }
 }
+
+.mgmt-roles-block {
+  margin-bottom: 0.75rem;
+}
+
+.mgmt-roles-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.65rem;
+}
+
+.mgmt-roles-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.mgmt-role-add-btn {
+  border: 1px dashed #94a3b8;
+  background: #f8fafc;
+  color: #0f172a;
+  border-radius: 8px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.mgmt-role-add-btn:hover {
+  background: #f1f5f9;
+  border-color: #64748b;
+}
+
+.mgmt-role-row {
+  padding: 0.75rem;
+  margin-bottom: 0.65rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 10px;
+  background: #fafbfc;
+}
+
+.mgmt-role-row .mgmt-role-fields {
+  margin-bottom: 0;
+}
+
+.mgmt-role-remove-btn {
+  margin-top: 0.5rem;
+  border: none;
+  background: transparent;
+  color: #b91c1c;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+}
+
+.mgmt-role-remove-btn:hover {
+  text-decoration: underline;
+}

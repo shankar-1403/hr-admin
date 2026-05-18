@@ -2,7 +2,29 @@ import { useMemo, useState } from 'react';
 import { db } from '../firebase';
 import { ref, remove } from 'firebase/database';
 import { RTDB_MANAGEMENT_ITEMS } from '../constants/rtdbPaths';
+import { normalizeManagementRoles } from '../utils/managementRecord';
 import './EmployeeTable.css';
+
+function truncateCell(text, max = 72) {
+  if (!text) return '';
+  return text.length > max ? `${text.slice(0, max)}…` : text;
+}
+
+function RolesColumn({ roles, field }) {
+  if (!roles.length) return '-';
+  return (
+    <div className="mgmt-table-roles">
+      {roles.map((role, index) => {
+        const value = (role[field] || '').trim();
+        return (
+          <div key={index} className="mgmt-table-role-line" title={value || undefined}>
+            {value ? truncateCell(value) : '—'}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
 
 function publicMgmtUrl(itemId, fullName) {
   const slug = (fullName || '')
@@ -36,12 +58,14 @@ export default function ManagementTable({ items, onRefresh, onEdit }) {
     const term = search.trim().toLowerCase();
     if (!term) return items;
     return items.filter((row) => {
+      const roleEntries = normalizeManagementRoles(row);
       const blob = [
         row.fullName,
         row.title,
         row.jobTitle,
         row.subtitle,
         row.companyName,
+        ...roleEntries.flatMap((r) => [r.jobTitle, r.companyName]),
         row.bio,
         row.details,
         row.mobilePhone,
@@ -121,17 +145,17 @@ export default function ManagementTable({ items, onRefresh, onEdit }) {
               </td>
             </tr>
           ) : (
-            visible.map((row,index) => (
+            visible.map((row, index) => {
+              const roles = normalizeManagementRoles(row);
+              return (
               <tr key={row.id}>
-                <td>{index+1}.</td>
+                <td>{start + index + 1}.</td>
                 <td>{row.fullName || row.title || '-'}</td>
-                <td>{row.jobTitle || row.subtitle || '-'}</td>
                 <td>
-                  {(() => {
-                    const c = (row.companyName || '').trim();
-                    if (!c) return '-';
-                    return c.length > 72 ? `${c.slice(0, 72)}…` : c;
-                  })()}
+                  <RolesColumn roles={roles} field="jobTitle" />
+                </td>
+                <td>
+                  <RolesColumn roles={roles} field="companyName" />
                 </td>
                 <td>
                   <div>
@@ -157,7 +181,8 @@ export default function ManagementTable({ items, onRefresh, onEdit }) {
                   </div>
                 </td>
               </tr>
-            ))
+            );
+            })
           )}
         </tbody>
       </table>
